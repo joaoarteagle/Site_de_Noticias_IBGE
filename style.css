@@ -1,0 +1,142 @@
+body{
+    padding: 0;
+    margin: 0;
+    display: grid;
+    /* grid-template-rows:20vh 80vh 20vh ; */
+}
+h3{
+    color: black;
+}
+
+header, footer{
+    background-color: #4682b4;
+    max-height: 15vh;
+    padding: 10px;
+
+}
+
+main{
+    background-color: #f0f0f0;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    flex-direction: column;
+
+}
+
+form{
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    padding: 3vh;
+}
+
+button{
+    position: absolute;
+    right: 30vw;
+    background-color: transparent;
+    border: none;
+}
+button:hover{
+    filter: brightness(80%);
+}
+
+svg{
+    position: absolute;
+    right: 2vw;
+    top: 5vw;
+}
+input{
+
+    min-width:40vw ;
+    height: 4vh;
+    border-radius: 5px;
+    border: none;
+}
+
+h1{
+
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    color: white;
+    font-family: "Lato", sans-serif;
+    font-size: x-large;
+    font-weight: bold(300);
+    margin: 7px;
+}
+ul{
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    flex-direction: column;
+}
+.newsitem, li{
+    list-style-type: none ;
+    width: 100ch;
+    display: flex;
+    flex-direction: row;
+    align-items: center;
+    padding: 20px 0px;
+
+
+}
+
+.newsitem{
+    gap: 10px;
+    border-bottom: solid 1px rgb(184, 184, 184);
+}
+
+ul img{
+    object-fit: cover;
+    width: 20vw;
+    height: 30vh;
+
+}
+
+footer p{
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    color: white;
+}
+
+.buttonsAreas{
+    display: flex;
+    width: 40vw;
+    flex-direction: row;
+   
+}
+
+.buttonsAreas li button{
+    width: 40px;
+    height: 40px;
+    position: static;
+    border-radius: 5px;
+    border: solid 2px #4682b4;
+    color: #4682b4;
+    font-size: medium;
+}
+
+.buttonsAreas li button:hover, .buttonsAreas li button:focus{
+    background-color: #4682b4;
+    color: white;
+}
+
+
+a{
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    background-color: rgb(209, 209, 209);
+    height: 25px;
+    border-radius: 5px;
+    color: black;
+    text-decoration: none;
+
+}
+
+p, h2{
+
+    margin: 8px;
+}
