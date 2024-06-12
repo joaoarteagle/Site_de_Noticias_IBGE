@@ -1,7 +1,30 @@
     const ul = document.createElement("ul");
     const main = document.querySelector("main");
     const buttonsArea = document.createElement("ul");
-    buttonsArea.className = "buttonsAreas"
+    const filtro = document.querySelector("svg");
+    buttonsArea.className = "buttonsArea";
+
+    const itemsPerPage = 10;
+    let currentPage = 1;
+    let totalPages = 1;
+    let noticias = [];
+
+    filtro.setAttribute("onclick", 'openModal()');
+
+
+    function openModal(){
+        const modal = document.querySelector('main #modal');
+        console.log("antes")
+        modal.showModal();
+        console.log("depois")
+    }
+
+
+    const close_modal = document.querySelector("#close_modal");
+    close_modal.addEventListener('click', () =>{
+        const modal = document.querySelector("main #modal");
+        modal.close();
+    })
 
     
 
@@ -11,11 +34,27 @@ async function API(){
 
        const jsonData = await data.json();
         
-       const pageQunt = jsonData.count / 10 ;
+       
+       noticias = await jsonData.items;
+       totalPages = noticias.length / 10 ;
+        displayItems(currentPage);
+       
+    } catch (error) {
+        console.error(error)
+        console.log("Algo de errado")
+    }
+}
 
-       const noticias = await jsonData.items.slice(0,10);
-        
-       noticias.forEach(element => {
+ // Função para exibir os itens de uma página específica
+ function displayItems(page) {
+
+    ul.innerHTML = ''; // Limpar os itens existentes
+    const startIndex = (page - 1) * itemsPerPage;
+    const endIndex = startIndex + itemsPerPage;
+    const items = noticias.slice(startIndex, endIndex);
+   
+
+    items.forEach(element => {
 
         const li = document.createElement("li");
         li.className = "newsitem";
@@ -55,30 +94,100 @@ async function API(){
 
         ul.appendChild(li);
 
-        console.log(element.titulo);
+    
        });
 
        main.appendChild(ul);
-       createButton();
-       
-    } catch (error) {
-        console.error(error)
-        console.log("Algo de errado")
-    }
+       updateQueryString(currentPage);
+       createPaginationButtons();
+
+   
 }
 
-function createButton(){
-    for(i = 1; i<= 10; i++){
+// function createButton(){
 
-        button = document.createElement("button");
-        button.textContent = i; 
-        li = document.createElement("li");
+    
+//     for(i = 1; i<= 10; i++){
+
+//         button = document.createElement("button");
+//         button.textContent = i; 
+//         li = document.createElement("li");
+//         li.appendChild(button);
+
+//         buttonsArea.appendChild(li);
+//         main.appendChild(buttonsArea);
+//     }
+// }
+
+
+ // Função para criar os botões de paginação
+ function createPaginationButtons() {
+
+    // console.log("entrou na função")
+     buttonsArea.innerHTML = ''; // Limpar os botões existentes
+     
+     let page = 11;
+
+
+    const urlSeachParam = new URLSearchParams(location.search);
+    const atualPage = parseInt(urlSeachParam.get("page"));
+
+    if(atualPage > 6){
+        page += atualPage - 6;
+    }
+
+     
+     for (let i = page - 10; i < page; i++) {
+        
+
+        const li = document.createElement('li');
+        const button = document.createElement('button');
+        button.className = "pageButton"
+        button.textContent = i;
+        button.addEventListener('click', () => {
+            currentPage = i;
+
+            updateQueryString(currentPage);
+            displayItems(currentPage);
+            
+        });
+
+        if(i === atualPage){
+            button.className = "activeButton"
+        }
+
         li.appendChild(button);
-
         buttonsArea.appendChild(li);
-        main.appendChild(buttonsArea);
     }
+
+
+
+    // const divButtonScroll = document.createElement("div");
+    // divButtonScroll.className = "divButtonScroll";
+    // divButtonScroll.appendChild(buttonsArea);
+    main.appendChild(buttonsArea);
 }
 
+
+
+
+
+
+        // Função para atualizar a query string da URL
+        function updateQueryString(page) {
+            const newUrl = new URL(window.location.href);
+            newUrl.searchParams.set('page', page);
+            window.history.pushState({}, '', newUrl);
+        }
+
+        // Verificar a query string ao carregar a página
+        function checkQueryString() {
+            const urlParams = new URLSearchParams(window.location.search);
+            const page = parseInt(urlParams.get('page')) || 1;
+          //  fetchItems(page);
+        }
+
+        // Chamar a função para buscar os itens quando a página carregar
+        checkQueryString();
 
 API();

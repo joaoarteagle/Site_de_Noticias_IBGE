@@ -7,6 +7,8 @@
     <link rel="preconnect" href="https://fonts.googleapis.com">
 <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
 <link href="https://fonts.googleapis.com/css2?family=Lato:ital,wght@0,100;0,300;0,400;0,700;0,900;1,100;1,300;1,400;1,700;1,900&display=swap" rel="stylesheet">
+
+<link href="https://fonts.googleapis.com/css2?family=Dosis:wght@200..800&display=swap" rel="stylesheet">
     <link rel="stylesheet" href="style.css">
     <title>Document</title>
 </head>
@@ -15,7 +17,7 @@
 
     <header>
         <h1>Portal de Notícias do IBGE</h1>
-        <form action=""><input type="text" placeholder="Buscar noticia por termo"><button type="submit">🔍</button></form>
+        <form action=""><input type="text" placeholder="Buscar noticia por termo" id="main_input"><button type="submit">🔍</button></form>
         <svg width="20" height="20" fill="#f0f0f0" viewBox="0 0 80 90" focusable="false"
             xmlns="http://www.w3.org/2000/svg">
             <path d="m 0,0 30,45 0,30 10,15 0,-45 30,-45 Z"></path>
@@ -23,7 +25,49 @@
     </header>
 
     <main>
-        <dialog>
+        <dialog id="modal">   
+            
+            <h5 id="close_modal">X</h5>
+            <form action="">
+
+                <div>
+                <label for="type">
+                    Tipo:
+                    <select name="tipo" id="type">
+                        <option value="" selected disabled>Selecione</option>
+                        <option value=""></option>
+                    </select>
+                </label>
+
+
+                <label for="quantidade">
+                    Quantidade:
+                    <select name="quantidade" id="quantidade">
+                        <option value="5">5</option>
+                        <option value="10" selected>10</option>
+                        <option value="20">20</option>
+                    </select>
+                </label>
+
+            </div>
+
+                <div>
+
+                <label for="de">
+                    De:
+                    <input type="date" name="" id="de" class="input_dialog">
+
+                </label>
+
+
+               <label for="ate">
+                Até:
+                <input type="date" name="" id="ate" class="input_dialog">
+               </label>
+            </div>
+
+            <button onsubmit="">Aplicar</button>
+            </form>
             
         </dialog>
 
@@ -31,7 +75,10 @@
     <footer>
         <p>© prova do Segundo Bimestre - Programação WEB</p>
     </footer>
-<script src="index.js"></script>
+<script src="index.js" defer>
+
+</script>
+
 </body>
 
 </html>
