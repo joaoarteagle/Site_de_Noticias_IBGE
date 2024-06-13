@@ -212,6 +212,7 @@ form div {
     position: absolute;
     right: 19px;
     top: -12px;
+    cursor: pointer;
 }
 
 label{

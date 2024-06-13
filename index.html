@@ -17,7 +17,7 @@
 
     <header>
         <h1>Portal de Notícias do IBGE</h1>
-        <form action=""><input type="text" placeholder="Buscar noticia por termo" id="main_input"><button type="submit">🔍</button></form>
+        <form onsubmit="SearchNews(event)" id="main_form"><input type="text" placeholder="Buscar noticia por termo" name="main_input" id="main_input"><button type="submit">🔍</button></form>
         <svg width="20" height="20" fill="#f0f0f0" viewBox="0 0 80 90" focusable="false"
             xmlns="http://www.w3.org/2000/svg">
             <path d="m 0,0 30,45 0,30 10,15 0,-45 30,-45 Z"></path>
@@ -28,14 +28,15 @@
         <dialog id="modal">   
             
             <h5 id="close_modal">X</h5>
-            <form action="">
+            <form onsubmit="filterNews(event)" id="form_modal">
 
                 <div>
                 <label for="type">
                     Tipo:
-                    <select name="tipo" id="type">
+                    <select name="type" id="type">
                         <option value="" selected disabled>Selecione</option>
-                        <option value=""></option>
+                        <option value="noticia">noticia</option>
+                        <option value="release">release</option>
                     </select>
                 </label>
 
@@ -55,18 +56,18 @@
 
                 <label for="de">
                     De:
-                    <input type="date" name="" id="de" class="input_dialog">
+                    <input type="date" name="de" id="de" class="input_dialog">
 
                 </label>
 
 
                <label for="ate">
                 Até:
-                <input type="date" name="" id="ate" class="input_dialog">
+                <input type="date" name="ate" id="ate" class="input_dialog">
                </label>
             </div>
 
-            <button onsubmit="">Aplicar</button>
+            <button type="submit" onclick="modal.close()">Aplicar</button>
             </form>
             
         </dialog>
