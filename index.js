@@ -1,4 +1,5 @@
     const ul = document.createElement("ul");
+    ul.className = "container"
     const main = document.querySelector("main");
     const buttonsArea = document.createElement("ul");
     const filtro = document.querySelector("svg");
@@ -6,8 +7,16 @@
 
     const urlSearchParams = new URLSearchParams(location.search);
 
-    let itemsPerPage = parseInt(urlSearchParams.get("quantidade"));
-    let currentPage = 1;
+    let parans = urlSearchParams.toString();
+    let position = parans.indexOf("?");
+    let result = parans.substring(position);
+
+    let page = urlSearchParams.get("page");
+    console.log(page);
+
+
+    let itemsPerPage = 10//(parseInt(urlSearchParams.get("qtd")) !== null) ? (parseInt(urlSearchParams.get("qtd"))) : 10
+    let currentPage = (parseInt(urlSearchParams.get("page")) !== null) ? (parseInt(urlSearchParams.get("page"))) : 1;
     let totalPages = 1;
     let noticias = [];
     let jsonData;
@@ -39,7 +48,7 @@
 
 
         type.value       = urlSearchParams.get('tipo');
-        quantidade.value = urlSearchParams.get('quantidade');
+        quantidade.value = urlSearchParams.get('qtd');
         de.value         = urlSearchParams.get('de');
         ate.value        = urlSearchParams.get('ate');
 
@@ -57,20 +66,20 @@
 
     
 
-async function API(){
-
-
-
+async function API(query){
 
     try {
-       const data = await fetch(`http://servicodados.ibge.gov.br/api/v3/noticias`);
+       const data = await fetch(`http://servicodados.ibge.gov.br/api/v3/noticias/?${query}`);
 
        jsonData = await data.json();
         
        
        noticias = await jsonData.items;
-       totalPages = noticias.length / itemsPerPage ;
-        displayItems(currentPage);
+
+        totalPages = jsonData.totalPages ;
+    
+        await displayItems(currentPage);
+        console.log("fez")
        
     } catch (error) {
         console.error(error)
@@ -79,16 +88,14 @@ async function API(){
 }
 
  // Função para exibir os itens de uma página específica
- function displayItems(page) {
-
-
-
-
+function displayItems(page) {
 
     ul.innerHTML = ''; // Limpar os itens existentes
     const startIndex = (page - 1) * itemsPerPage;
     const endIndex = startIndex + itemsPerPage;
     const items = noticias.slice(startIndex, endIndex);
+
+ 
    
 
     items.forEach(element => {
@@ -160,9 +167,9 @@ async function API(){
 
  // Função para criar os botões de paginação
  function createPaginationButtons() {
+    buttonsArea.innerHTML = ''; // Limpar os botões existentes
 
     // console.log("entrou na função")
-     buttonsArea.innerHTML = ''; // Limpar os botões existentes
      let page = 11;
 
      
@@ -172,8 +179,11 @@ async function API(){
     const atualPage = parseInt(urlSeachParam.get("page"));
 
     if(atualPage > 6){
+    
+
         page += atualPage - 6;
     }
+
 
      
      for (let i = page - 10; i < page; i++) {
@@ -187,7 +197,9 @@ async function API(){
             currentPage = i;
 
             updateQueryString(currentPage);
-            displayItems(currentPage);
+           // urlSeachParam.set("page", i)
+            
+           // API(urlSeachParam.toString().substring(position));
             
         });
 
@@ -223,7 +235,8 @@ async function API(){
         function checkQueryString() {
             const urlParams = new URLSearchParams(window.location.search);
             const page = parseInt(urlParams.get('page')) || 1;
-          //  fetchItems(page);
+
+            displayItems(page);
         }
 
         // Chamar a função para buscar os itens quando a página carregar
@@ -239,16 +252,16 @@ async function API(){
            
             const newUrl = new URL(window.location.href);
             newUrl.searchParams.set('tipo',formData.get("type"));
-            newUrl.searchParams.set('quantidade', formData.get("quantidade"));
+            newUrl.searchParams.set('qtd', formData.get("quantidade"));
             newUrl.searchParams.set('de', formData.get("de"));
             newUrl.searchParams.set('ate', formData.get("ate"));
             window.history.pushState({}, '', newUrl);
 
-            itemsPerPage = formData.get("quantidade");
+            itemsPerPage = formData.get("qtd");
 
             
 
-            displayItems(atualPage);
+            displayItems(currentPage);
             
         }
 
@@ -278,4 +291,4 @@ async function API(){
         }
 
 
-API();
+API(result);
