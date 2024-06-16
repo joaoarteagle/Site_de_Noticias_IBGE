@@ -229,12 +229,12 @@ label{
         width: 80vw;
     }
     dialog form{
-        width: 80vw;
+        max-width: 80vw;
     }
-    dialog{
+    /* dialog{
         min-width: 60vw;
     
-    }
+    } */
 
     .input_dialog, select{
         height: 5vh;

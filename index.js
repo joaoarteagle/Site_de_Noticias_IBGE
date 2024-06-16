@@ -75,7 +75,7 @@
 async function API(query){
 
     try {
-       const data = await fetch(`http://servicodados.ibge.gov.br/api/v3/noticias/?${query}`);
+       const data = await fetch(`https://servicodados.ibge.gov.br/api/v3/noticias/?${query}`);
 
        jsonData = await data.json();
         
