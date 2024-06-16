@@ -1,3 +1,4 @@
+
 body{
     padding: 0;
     margin: 0;
@@ -75,7 +76,7 @@ ul{
 }
 .newsitem, li{
     list-style-type: none ;
-    width: 100ch;
+    max-width: 100ch;
     display: flex;
     flex-direction: row;
     align-items: center;
@@ -222,3 +223,41 @@ label{
     flex-direction: column;
 }
 
+@media (max-width: 1120px){
+    form div{
+        flex-direction: column;
+        width: 80vw;
+    }
+    dialog form{
+        width: 80vw;
+    }
+    dialog{
+        min-width: 60vw;
+    
+    }
+
+    .input_dialog, select{
+        height: 5vh;
+        width:   300px ;
+    }
+    .newsitem, li{
+        flex-direction: column;
+    }
+
+    ul img{
+        object-fit: cover;
+        width: 60vw;
+        height: 50vh;
+    
+    }
+
+    #main_input{
+        max-width: 80vw;
+    }
+
+    li div{
+        width: fit-content;
+    }
+
+
+}

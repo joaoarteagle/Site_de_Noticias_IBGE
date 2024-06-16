@@ -11,13 +11,19 @@
     let position = parans.indexOf("?");
     let result = parans.substring(position);
 
-    let page = urlSearchParams.get("page");
+    let page = !isNaN(urlSearchParams.get("page"))
+    ? parseInt(urlSearchParams.get("page"))
+    : 1
+
+
     console.log(page);
 
 
-    let itemsPerPage = 10//(parseInt(urlSearchParams.get("qtd")) !== null) ? (parseInt(urlSearchParams.get("qtd"))) : 10
-    let currentPage = (parseInt(urlSearchParams.get("page")) !== null) ? (parseInt(urlSearchParams.get("page"))) : 1;
-    let totalPages = 1;
+    let itemsPerPage = 10;//(parseInt(urlSearchParams.get("qtd")) !== null) ? (parseInt(urlSearchParams.get("qtd"))) : 10
+    let currentPage = !isNaN(urlSearchParams.get("page"))
+    ? parseInt(urlSearchParams.get("page"))
+    : 1
+     let totalPages = 1;
     let noticias = [];
     let jsonData;
 
@@ -197,9 +203,10 @@ function displayItems(page) {
             currentPage = i;
 
             updateQueryString(currentPage);
-           // urlSeachParam.set("page", i)
+            // urlSeachParam.set("page", i)
             
-           // API(urlSeachParam.toString().substring(position));
+            location.reload();
+            API(urlSeachParam.toString().substring(position));
             
         });
 
